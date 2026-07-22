@@ -1,20 +1,10 @@
 import NavItem from "./NavItem";
+import { FiUser } from "react-icons/fi";
 
-function Navbar() {
-  const menuItems = [
-    { id: 1, name: "Home", link: "#" },
-    { id: 2, name: "Explore", link: "#" },
-    { id: 3, name: "Messages", link: "#" },
-    { id: 4, name: "Settings", link: "#" },
-  ];
-
+function Navbar({ menuItems }) {
   return (
     <nav className="navbar">
-      <img
-        src="/instagram-logo.png"
-        alt="Instagram Logo"
-        className="logo"
-      />
+      <img src="/instagram-logo.png" alt="Instagram Logo" className="logo" />
 
       <div className="nav-links">
         {menuItems.map((item) => (
@@ -27,7 +17,10 @@ function Navbar() {
         ))}
       </div>
 
-      <button className="profile-btn">Profile</button>
+      <button className="profile-btn">
+        <FiUser className="nav-icon" />
+        Profile
+      </button>
     </nav>
   );
 }
