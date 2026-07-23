@@ -26,8 +26,11 @@
   gap: 15px;
 }
 
-.nav-links a,
+.nav-item,
 .profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   color: #000000;
   background: none;
@@ -78,14 +81,15 @@
 }
 
 .story {
-  width: 75px;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
+  flex: none;
 }
 
-.story img {
+.story-image {
   width: 75px;
   height: 75px;
   border-radius: 50%;
@@ -97,6 +101,8 @@
 .story-username {
   font-size: 14px;
   font-weight: 500;
+  text-align: center;
+  width: 100%;
 }
 
 .post-list {
