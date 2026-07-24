@@ -20,8 +20,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#fafafa] px-4">
-      <div className="w-full max-w-lg border border-[#dbdbdb] bg-white px-10 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#fdf2f8] via-[#f5e7ff] to-[#e0f2fe] px-4 py-10">
+      <div className="w-full max-w-lg rounded-xl border border-[#dbdbdb] bg-white/95 px-10 py-8 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
         <img
           src="/instagram-logo.png"
           alt="Instagram"
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
         </div>
 
         <p className="text-center text-sm">
-          <Link to="/" className="font-semibold text-[#0095f6] hover:underline">
+          <Link to="/" className="font-semibold text-[#d72c7a] hover:underline">
             Back to login
           </Link>
         </p>

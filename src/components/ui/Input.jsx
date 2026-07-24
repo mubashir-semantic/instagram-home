@@ -1,4 +1,4 @@
-function Input({ label, type, placeholder, value, onChange, }) {
+function Input({ label, type, placeholder, value, onChange, username, birthdate }) {
   return (
     <div className="mb-4">
       <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -10,6 +10,8 @@ function Input({ label, type, placeholder, value, onChange, }) {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        name={username}
+        id={birthdate}
         className="w-full rounded border border-gray-300 bg-[#FAFAFA] px-3 py-2 text-sm outline-none focus:border-gray-400"
       />
     </div>

@@ -23,8 +23,8 @@ function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FAFAFA] px-4">
-      <div className="w-full max-w-lg border border-gray-300 bg-white px-10 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#fdf2f8] via-[#f5e7ff] to-[#e0f2fe] px-4 py-10">
+      <div className="w-full max-w-lg rounded-xl border border-[#dbdbdb] bg-white/95 px-10 py-8 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
         <img
           src="/instagram-logo.png"
           alt="Instagram"
@@ -58,12 +58,12 @@ function Login() {
           <span className="mx-4 font-semibold uppercase text-gray-500">OR</span>
           <div className="h-px flex-1 bg-gray-300"></div>
         </div>
-        <div className="flex items-center justify-between w-full mt-4">
-          <p className="text-center text-sm">
+        <div className="mt-4 flex flex-col gap-2 text-sm md:flex-row md:items-center md:justify-between md:gap-0 text-center">
+          <p className="text-sm">
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="font-semibold text-[#0095f6] hover:underline"
+              className="font-semibold text-[#d72c7a] hover:underline"
             >
               Sign up
             </Link>
@@ -71,7 +71,7 @@ function Login() {
 
           <Link
             to="/forgot-password"
-            className="cursor-pointer text-sm text-[#0095f6] hover:underline block text-center font-semibold"
+            className="block text-center font-semibold text-[#d72c7a] hover:underline"
           >
             Forgot password?
           </Link>
