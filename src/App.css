@@ -125,18 +125,20 @@
   justify-content: space-between;
   padding: 15px;
 }
+
 .post-user-info {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.post-Menu-button{
+.post-Menu-button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 24px;
 }
+
 .post-Menu-button:hover {
   color: #d72c7a;
 }
@@ -155,7 +157,7 @@
 
 .post-image {
   width: 100%;
-  max-height: 600px;
+  max-height: 800px;
   object-fit: cover;
 }
 
@@ -185,7 +187,7 @@
 }
 
 .post-time {
-  padding: 0 15px 15px ;
+  padding: 0 15px 15px;
   font-size: 14px;
   color: #888888;
 }
@@ -225,7 +227,7 @@
   gap: 15px;
 }
 
-.suggestion-info{
+.suggestion-info {
   display: flex;
 
   flex-direction: column;
@@ -250,6 +252,7 @@
   font-weight: 600;
   cursor: pointer;
 }
+
 .suggestion-follow-btn:hover {
   color: blue;
 }

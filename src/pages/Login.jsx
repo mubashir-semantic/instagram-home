@@ -27,8 +27,8 @@ function Login() {
       <div className="w-full max-w-lg border border-gray-300 bg-white px-10 py-12">
         <img
           src="/instagram-logo.png"
-          alt="Instagram Logo"
-          className="mx-auto mb-10 w-64"
+          alt="Instagram"
+          className="mx-auto mb-8 w-48"
         />
 
         <form onSubmit={handleLogin}>
@@ -58,13 +58,24 @@ function Login() {
           <span className="mx-4 font-semibold uppercase text-gray-500">OR</span>
           <div className="h-px flex-1 bg-gray-300"></div>
         </div>
+        <div className="flex items-center justify-between w-full mt-4">
+          <p className="text-center text-sm">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-[#0095f6] hover:underline"
+            >
+              Sign up
+            </Link>
+          </p>
 
-        <Link
-          to="/home"
-          className="cursor-pointer text-center text-sm text-[#00376B] hover:underline"
-        >
-          Forgot password?
-        </Link>
+          <Link
+            to="/forgot-password"
+            className="cursor-pointer text-sm text-[#0095f6] hover:underline block text-center font-semibold"
+          >
+            Forgot password?
+          </Link>
+        </div>
       </div>
     </div>
   );
