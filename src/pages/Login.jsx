@@ -15,7 +15,9 @@ function Login() {
       return;
     }
 
-    localStorage.setItem("isLoggedIn", "true");
+    // localStorage.setItem("isLoggedIn", "true");
+    document.cookie = "isLoggedIn=true; path=/; max-age=30";
+    console.log("Cookie:", document.cookie);
     navigate("/home");
 
     console.log("Email:", email);

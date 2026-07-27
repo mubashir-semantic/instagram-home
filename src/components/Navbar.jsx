@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 function Navbar({ menuItems }) {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    // localStorage.removeItem("isLoggedIn");
+    document.cookie = "isLoggedIn=; path=/; max-age=0";
     navigate("/");
   };
   return (
