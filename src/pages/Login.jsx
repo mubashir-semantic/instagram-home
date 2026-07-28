@@ -2,9 +2,11 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (eve) => {
@@ -15,9 +17,14 @@ function Login() {
       return;
     }
 
-    // localStorage.setItem("isLoggedIn", "true");
-    document.cookie = "isLoggedIn=true; path=/; max-age=30";
-    console.log("Cookie:", document.cookie);
+    localStorage.setItem("isLoggedIn", "true");
+    // document.cookie = "isLoggedIn=true; path=/; max-age=3600";
+
+    login({
+      email: email,
+      password: password,
+    });
+
     navigate("/home");
 
     console.log("Email:", email);
