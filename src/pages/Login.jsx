@@ -2,14 +2,20 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/slices/authSlice";
+
+// import { useAuth } from "../context/AuthContext";
 
 function Login() {
+
+  const { loading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
+  // const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = (eve) => {
+  const handleLogin = async (eve) => {
     eve.preventDefault();
 
     if (!email.trim() || !password.trim()) {
@@ -17,18 +23,18 @@ function Login() {
       return;
     }
 
-    localStorage.setItem("isLoggedIn", "true");
-    // document.cookie = "isLoggedIn=true; path=/; max-age=3600";
+    try {
+      await dispatch(
+        loginUser({
+          email,
+          password,
+        })
+      ).unwrap();
 
-    login({
-      email: email,
-      password: password,
-    });
-
-    navigate("/home");
-
-    console.log("Email:", email);
-    console.log("Password:", password);
+      navigate("/home");
+    } catch (error) {
+      console.log("Login failed:", error);
+    }
   };
 
   return (
@@ -57,8 +63,19 @@ function Login() {
             onChange={(eve) => setPassword(eve.target.value)}
           />
 
+          {error && (
+            <p className="mt-2 text-sm text-red-500">
+              {error}
+            </p>
+          )}
+
           <div className="mt-5">
-            <Button text="Log In" type="submit" />
+            <Button
+              text={loading ? "Logging In..." : "Log In"}
+              type="submit"
+              disabled={loading}
+              loading={loading}
+            />
           </div>
         </form>
 

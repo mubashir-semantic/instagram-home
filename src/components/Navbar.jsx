@@ -1,15 +1,18 @@
 import NavItem from "./NavItem";
 import { FiUser, FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
+import { logout } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 function Navbar({ menuItems }) {
-  const { logout } = useAuth();
+  // const { logout } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = () => {
     // localStorage.removeItem("isLoggedIn");
     // document.cookie = "isLoggedIn=; path=/; max-age=0";
-    logout();
+    dispatch(logout());
     navigate("/");
   };
   return (
