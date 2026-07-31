@@ -1,11 +1,13 @@
 import NavItem from "./NavItem";
 import { FiUser, FiLogOut } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { useAuth } from "../context/AuthContext";
 import { logout } from "../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Navbar({ menuItems }) {
+  const queryClient = useQueryClient();
   // const { logout } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,6 +15,9 @@ function Navbar({ menuItems }) {
     // localStorage.removeItem("isLoggedIn");
     // document.cookie = "isLoggedIn=; path=/; max-age=0";
     dispatch(logout());
+    queryClient.removeQueries({
+      queryKey: ["userProfile"],
+    });
     navigate("/");
   };
   return (
@@ -37,10 +42,10 @@ function Navbar({ menuItems }) {
         Logout
       </button>
 
-      <button className="profile-btn">
+      <Link to="/profile" className="profile-btn">
         <FiUser className="nav-icon" />
         Profile
-      </button>
+      </Link>
     </nav>
   );
 }

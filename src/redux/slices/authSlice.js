@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const savedUser = JSON.parse(localStorage.getItem("user"));
+// const savedUser = JSON.parse(localStorage.getItem("user"));
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -36,8 +36,8 @@ export const loginUser = createAsyncThunk(
 );
 
 const initialState = {
-  user: savedUser || null,
-  isAuthenticated: Boolean(savedUser),
+  user: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -51,11 +51,6 @@ const authSlice = createSlice({
     login(state, action) {
       state.user = action.payload;
       state.isAuthenticated = true;
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify(action.payload)
-      );
     },
 
     logout(state) {
@@ -64,7 +59,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
 
-      localStorage.removeItem("user");
+      // localStorage.removeItem("user");
     },
   },
 
@@ -86,10 +81,10 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = loggedInUser;
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify(loggedInUser)
-        );
+        // localStorage.setItem(
+        //   "user",
+        //   JSON.stringify(loggedInUser)
+        // );
       })
 
       .addCase(loginUser.rejected, (state, action) => {
