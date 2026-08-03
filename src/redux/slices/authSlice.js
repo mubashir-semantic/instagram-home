@@ -1,35 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-// const savedUser = JSON.parse(localStorage.getItem("user"));
+import { loginUserApi } from "../../api/authService";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
 
   async (userData, thunkAPI) => {
     try {
-      const response = await fetch("https://reqres.in/api/login", {
-        method: "POST",
+      const data = await loginUserApi(userData);
 
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "free_user_3HAsnAtljG6Fj4KjMEz79G8SPrd",
-        },
-
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return thunkAPI.rejectWithValue(
-          data.error || "Login failed"
-        );
-      }
-
-      return data;
+      return {
+        email: userData.email,
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.message || "Something went wrong"
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Unable to login"
       );
     }
   }
@@ -37,6 +26,8 @@ export const loginUser = createAsyncThunk(
 
 const initialState = {
   user: null,
+  accessToken: null,
+  refreshToken: null,
   isAuthenticated: false,
   loading: false,
   error: null,
@@ -48,19 +39,27 @@ const authSlice = createSlice({
   initialState,
 
   reducers: {
-    login(state, action) {
-      state.user = action.payload;
-      state.isAuthenticated = true;
-    },
-
     logout(state) {
       state.user = null;
+      state.accessToken = null;
+      state.refreshToken = null;
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
-
-      // localStorage.removeItem("user");
     },
+
+    updateTokens(state, action) {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
+
+    clearAuthError(state) {
+      state.error = null;
+    },
+
+    // setInvalidAccessToken(state) {
+    //   state.accessToken = "invalid-access-token";
+    // },
   },
 
   extraReducers: (builder) => {
@@ -71,31 +70,35 @@ const authSlice = createSlice({
       })
 
       .addCase(loginUser.fulfilled, (state, action) => {
-        const loggedInUser = {
-          email: action.meta.arg.email,
-          token: action.payload.token,
-        };
-
         state.loading = false;
         state.error = null;
         state.isAuthenticated = true;
-        state.user = loggedInUser;
 
-        // localStorage.setItem(
-        //   "user",
-        //   JSON.stringify(loggedInUser)
-        // );
+        state.user = {
+          email: action.payload.email,
+        };
+
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
       })
 
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
+        state.user = null;
+        state.accessToken = null;
+        state.refreshToken = null;
         state.error =
           action.payload || "Unable to login";
       });
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const {
+  logout,
+  updateTokens,
+  clearAuthError,
+  // setInvalidAccessToken,
+} = authSlice.actions;
 
 export default authSlice.reducer;

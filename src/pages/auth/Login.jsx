@@ -1,35 +1,37 @@
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
-import { useState } from "react";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../redux/slices/authSlice";
+import { loginUser } from "../../redux/slices/authSlice";
 
-// import { useAuth } from "../context/AuthContext";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../validations/loginSchema";
 
 function Login() {
+  const { loading, error } = useSelector(
+    (state) => state.auth
+  );
 
-  const { loading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const handleLogin = async (eve) => {
-    eve.preventDefault();
 
-    if (!email.trim() || !password.trim()) {
-      alert("Please enter email and password");
-      return;
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
 
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = async (formData) => {
     try {
-      await dispatch(
-        loginUser({
-          email,
-          password,
-        })
-      ).unwrap();
+      await dispatch(loginUser(formData)).unwrap();
 
       navigate("/home");
     } catch (error) {
@@ -46,21 +48,21 @@ function Login() {
           className="mx-auto mb-8 w-48"
         />
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit(handleLogin)}>
           <Input
             label="Email"
             type="email"
             placeholder="Phone number, username or email"
-            value={email}
-            onChange={(eve) => setEmail(eve.target.value)}
+            error={errors.email?.message}
+            {...register("email")}
           />
 
           <Input
             label="Password"
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(eve) => setPassword(eve.target.value)}
+            error={errors.password?.message}
+            {...register("password")}
           />
 
           {error && (
@@ -81,10 +83,15 @@ function Login() {
 
         <div className="my-6 flex items-center">
           <div className="h-px flex-1 bg-gray-300"></div>
-          <span className="mx-4 font-semibold uppercase text-gray-500">OR</span>
+
+          <span className="mx-4 font-semibold uppercase text-gray-500">
+            OR
+          </span>
+
           <div className="h-px flex-1 bg-gray-300"></div>
         </div>
-        <div className="mt-4 flex flex-col gap-2 text-sm md:flex-row md:items-center md:justify-between md:gap-0 text-center">
+
+        <div className="mt-4 flex flex-col gap-2 text-center text-sm md:flex-row md:items-center md:justify-between md:gap-0">
           <p className="text-sm">
             Don't have an account?{" "}
             <Link

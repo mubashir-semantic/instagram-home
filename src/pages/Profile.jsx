@@ -1,24 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import { fetchUserProfile } from "../api/userApi";
+import { getUserProfileApi } from "../api/userService";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import ProfileCard from "../components/ProfileCard";
+// import { useDispatch } from "react-redux";
+// import { setInvalidAccessToken } from "../redux/slices/authSlice";
 
 function Profile() {
-  const token = useSelector(
-    (state) => state.auth.user?.token
+  const accessToken = useSelector(
+    (state) => state.auth.accessToken
   );
+
+  // const dispatch = useDispatch();
 
   const {
     data: profile,
     isLoading,
     isError,
     error,
+    // refetch,
   } = useQuery({
-    queryKey: ["userProfile", token],
-    queryFn: () => fetchUserProfile(token),
-    enabled: !!token,
+    queryKey: ["userProfile"],
+    queryFn: getUserProfileApi,
+    enabled: !!accessToken,
+    retry: false, // Disable automatic retries on failure
   });
 
   if (isLoading) {
@@ -29,9 +35,22 @@ function Profile() {
     return <ErrorMessage message={error.message} />;
   }
 
-  return <ProfileCard profile={profile} />;
+  return (
+    <>
+      <ProfileCard profile={profile} />
+
+      {/* <button
+        onClick={async () => {
+          dispatch(setInvalidAccessToken());
+          await refetch();
+        }}
+        className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
+      >
+        Expire Access Token
+      </button> */}
+    </>
+  );
+
 }
-
-
 
 export default Profile;

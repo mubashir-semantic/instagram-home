@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/Routes/ProtectedRoute";
 import PublicRoute from "./components/Routes/PublicRoute";
-import Register from "./pages/Register";
-import ForgotPassword from "./pages/ForgotPassword";
-import Login from "./pages/Login";
+import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Login from "./pages/auth/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import "./App.css";
