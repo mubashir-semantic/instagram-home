@@ -304,3 +304,7 @@
   height: 100vh;
   padding: 30px 80px;
 }
+
+.post-button.liked {
+  color: #d72c7a;
+}

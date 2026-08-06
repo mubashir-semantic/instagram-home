@@ -6,8 +6,11 @@ import ErrorMessage from "../components/ui/ErrorMessage";
 import ProfileCard from "../components/ProfileCard";
 // import { useDispatch } from "react-redux";
 // import { setInvalidAccessToken } from "../redux/slices/authSlice";
+// import useToggle from "../hooks/useToggle";
 
 function Profile() {
+  // const { isOpen, toggle } = useToggle(false);
+
   const accessToken = useSelector(
     (state) => state.auth.accessToken
   );
@@ -48,6 +51,14 @@ function Profile() {
       >
         Expire Access Token
       </button> */}
+
+      {/* <button onClick={toggle} className="mt-4 rounded bg-blue-500 px-4 py-2 text-white">
+        Toggle
+      </button>
+
+      <p className="text-lg font-semibold">
+        {isOpen ? "Open" : "Closed"}
+      </p> */}
     </>
   );
 

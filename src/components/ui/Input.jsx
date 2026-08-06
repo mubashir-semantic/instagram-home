@@ -1,5 +1,6 @@
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import useToggle from "../../hooks/useToggle";
 
 const Input = forwardRef(function Input(
   {
@@ -11,7 +12,10 @@ const Input = forwardRef(function Input(
   },
   ref
 ) {
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    value: showPassword,
+    toggle: togglePassword,
+  } = useToggle(false);
 
   const inputType =
     type === "password" && showPassword
@@ -43,12 +47,10 @@ const Input = forwardRef(function Input(
         {type === "password" && (
           <button
             type="button"
-            onClick={() => setShowPassword((current) => !current)}
+            onClick={togglePassword}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#d72c7a]"
             aria-label={
-              showPassword
-                ? "Hide password"
-                : "Show password"
+              showPassword ? "Hide password" : "Show password"
             }
           >
             {showPassword ? (

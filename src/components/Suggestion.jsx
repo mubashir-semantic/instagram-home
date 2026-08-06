@@ -1,10 +1,20 @@
+import { memo } from "react";
+
 function Suggestion({ image, username, mutualFriends }) {
   return (
     <div className="suggestion">
       <div className="suggestion-user">
-        <img src={image} className="suggestion-image" alt={username} />
+        <img
+          src={image}
+          className="suggestion-image"
+          alt={username}
+        />
+
         <div className="suggestion-info">
-          <span className="suggestion-username">{username}</span>
+          <span className="suggestion-username">
+            {username}
+          </span>
+
           {mutualFriends && (
             <span className="suggestion-mutual-friends">
               {mutualFriends} mutual friends
@@ -12,9 +22,12 @@ function Suggestion({ image, username, mutualFriends }) {
           )}
         </div>
       </div>
-      <button className="suggestion-follow-btn">Follow</button>
+
+      <button className="suggestion-follow-btn">
+        Follow
+      </button>
     </div>
   );
 }
 
-export default Suggestion;
+export default memo(Suggestion);

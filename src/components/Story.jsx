@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 function Story({ image, username }) {
   return (
     <div className="story">
@@ -7,4 +9,4 @@ function Story({ image, username }) {
   );
 }
 
-export default Story;
+export default memo(Story);
