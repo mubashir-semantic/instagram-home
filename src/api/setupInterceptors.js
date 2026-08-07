@@ -33,7 +33,6 @@ export const setupInterceptors = (store) => {
     async (error) => {
       const originalRequest = error.config;
 
-      // Sirf 401 ko handle karna hai
       if (
         error.response?.status === 401 &&
         !originalRequest._retry

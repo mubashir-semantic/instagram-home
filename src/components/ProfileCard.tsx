@@ -1,8 +1,19 @@
 import defaultUser from "../assets/user-1.png";
-import Navbar from "../components/Navbar";
+import Navbar from "./Navbar";
 import { menuItems } from "../utils/constants";
 
-function ProfileCard({ profile }) {
+interface Profile {
+    first_name: string;
+    last_name: string;
+    email: string;
+    avatar: string;
+}
+
+interface ProfileCardProps {
+    profile: Profile;
+}
+
+function ProfileCard({ profile }: ProfileCardProps) {
     return (
         <div className="app">
             <Navbar menuItems={menuItems} />
@@ -13,7 +24,7 @@ function ProfileCard({ profile }) {
                         className="profile-avatar"
                         src={profile.avatar}
                         alt={`${profile.first_name} ${profile.last_name}`}
-                        onError={(event) => {
+                        onError={(event: React.SyntheticEvent<HTMLImageElement, Event>) => {
                             event.currentTarget.onerror = null;
                             event.currentTarget.src = defaultUser;
                         }}

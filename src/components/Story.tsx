@@ -1,6 +1,11 @@
 import { memo } from "react";
 
-function Story({ image, username }) {
+interface StoryProps {
+  image: string;
+  username: string;
+}
+
+function Story({ image, username }: StoryProps) {
   return (
     <div className="story">
       <img src={image} className="story-image" alt={username} />

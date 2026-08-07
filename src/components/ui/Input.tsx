@@ -2,7 +2,12 @@ import { forwardRef } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import useToggle from "../../hooks/useToggle";
 
-const Input = forwardRef(function Input(
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  error?: string;
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     label,
     type = "text",

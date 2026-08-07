@@ -1,4 +1,12 @@
-function Button({ text, type = "button", disabled = false, loading = false }) {
+interface ButtonProps {
+  text: string;
+  type?: "button" | "submit" | "reset";
+  // type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+function Button({ text, type = "button", disabled = false, loading = false }: ButtonProps) {
   return (
     <button
       type={type}
