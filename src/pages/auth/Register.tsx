@@ -6,6 +6,16 @@ import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { registerUserApi } from "../../api/authService";
 import { useState } from "react";
+import axios from "axios";
+
+interface RegisterFormData {
+  name: string;
+  username: string;
+  birthdate: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 function Register() {
 
@@ -16,7 +26,7 @@ function Register() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
 
     defaultValues: {
@@ -29,7 +39,7 @@ function Register() {
     },
   });
 
-  const handleRegister = async (formData) => {
+  const handleRegister = async (formData: RegisterFormData) => {
     try {
       setApiError("");
 
@@ -49,10 +59,15 @@ function Register() {
     } catch (error) {
       console.log("Registration failed:", error);
 
-      setApiError(
-        error.response?.data?.message ||
-        "Registration failed. Please try again."
-      );
+      if (axios.isAxiosError(error)) {
+        setApiError(
+          error.response?.data?.message ||
+          "Registration failed. Please try again."
+        );
+      } else {
+        setApiError("Registration failed. Please try again.");
+      }
+
     }
   };
 

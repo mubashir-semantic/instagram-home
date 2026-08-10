@@ -1,6 +1,14 @@
 import Story from "./Story";
 
-function StoryList({data}) {
+interface StoryListProps {
+  data: {
+    id: number;
+    image: string;
+    username: string;
+  }[];
+}
+
+function StoryList({data}: StoryListProps) {
   return (
     <div className="story-list">
       {data?.map((story) => (

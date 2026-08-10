@@ -1,9 +1,19 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function PublicRoute({ children }) {
+interface PublicRouteProps {
+  children: React.ReactNode;
+}
+
+interface RootState {
+  auth: {
+    isAuthenticated: boolean;
+  };
+}
+
+function PublicRoute({ children }: PublicRouteProps) {
   const isAuthenticated = useSelector(
-    (state) => state.auth.isAuthenticated
+    (state: RootState) => state.auth.isAuthenticated
   );
 
   if (isAuthenticated) {

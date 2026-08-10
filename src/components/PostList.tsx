@@ -1,11 +1,24 @@
 import { useCallback, useState, useMemo } from "react";
 import Post from "./Post";
 
-function PostList({ posts }) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [likedPosts, setLikedPosts] = useState([]);
+interface Postprops {
+    id: string;
+    username: string;
+    profileImage: string;
+    postImage: string;
+    caption: string;
+    posttime: string;
+}
 
-    const handleLike = useCallback((postId) => {
+interface PostListProps {
+    posts: Postprops[];
+}
+
+function PostList({ posts }: PostListProps) {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [likedPosts, setLikedPosts] = useState<string[]>([]);
+
+    const handleLike = useCallback((postId: string) => {
         setLikedPosts((currentLikedPosts) =>
             currentLikedPosts.includes(postId)
                 ? currentLikedPosts.filter((id) => id !== postId)

@@ -1,9 +1,19 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function ProtectedRoute({ children }) {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+interface RootState {
+  auth: {
+    isAuthenticated: boolean;
+  };
+}
+
+function ProtectedRoute({ children }: ProtectedRouteProps) {
   const isAuthenticated = useSelector(
-    (state) => state.auth.isAuthenticated
+    (state: RootState) => state.auth.isAuthenticated
   );
 
   if (!isAuthenticated) {

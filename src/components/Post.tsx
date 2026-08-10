@@ -7,6 +7,17 @@ import {
   FiMenu,
 } from "react-icons/fi";
 
+interface PostProps {
+  id: string;
+  username: string;
+  profileImage: string;
+  postImage: string;
+  caption: string;
+  posttime: string;
+  isLiked: boolean;
+  onLike: (id: string) => void;
+}
+
 function Post({
   id,
   username,
@@ -16,7 +27,7 @@ function Post({
   posttime,
   isLiked,
   onLike,
-}) {
+}: PostProps) {
   return (
     <article className="post">
       <div className="post-header">

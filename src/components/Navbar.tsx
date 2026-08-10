@@ -6,7 +6,16 @@ import { logout } from "../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 
-function Navbar({ menuItems }) {
+interface NavbarProps {
+  menuItems: {
+    id: number;
+    name: string;
+    icon: React.ReactNode;
+    link: string;
+  }[];
+}
+
+function Navbar({ menuItems }: NavbarProps) {
   const queryClient = useQueryClient();
   // const { logout } = useAuth();
   const navigate = useNavigate();

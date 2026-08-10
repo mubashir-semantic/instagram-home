@@ -1,7 +1,14 @@
 import { memo } from "react";
 import Suggestion from "./Suggestion";
 
-const suggestions = [
+interface SuggestionsData {
+  id: number;
+  image: string;
+  username: string;
+  mutualFriends?: number;
+}
+
+const suggestions : SuggestionsData[] = [
   {
     id: 1,
     image: "/user-1.png",

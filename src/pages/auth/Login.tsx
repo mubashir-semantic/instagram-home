@@ -1,38 +1,43 @@
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../redux/store";
+import { useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/authSlice";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../validations/loginSchema";
+import { useDispatch } from "react-redux";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 function Login() {
   const { loading, error } = useSelector(
-    (state) => state.auth
+    (state: RootState) => state.auth
   );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
-
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const handleLogin = async (formData) => {
+  const handleLogin = async (formData: LoginFormData) => {
     try {
       await dispatch(loginUser(formData)).unwrap();
-
       navigate("/home");
     } catch (error) {
       console.log("Login failed:", error);

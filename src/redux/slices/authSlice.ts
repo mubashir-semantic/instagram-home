@@ -1,12 +1,46 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginUserApi } from "../../api/authService";
+import axios from "axios";
 
-export const loginUser = createAsyncThunk(
+interface User {
+  email: string;
+}
+
+interface AuthState {
+  user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
+}
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export const loginUser = createAsyncThunk<
+  {
+    email: string;
+    accessToken: string;
+    refreshToken: string;
+  },
+  LoginFormData,
+  {
+    rejectValue: string;
+  }
+>(
   "auth/loginUser",
 
   async (userData, thunkAPI) => {
     try {
-      const data = await loginUserApi(userData);
+      const data: LoginResponse = await loginUserApi(userData);
 
       return {
         email: userData.email,
@@ -14,17 +48,21 @@ export const loginUser = createAsyncThunk(
         refreshToken: data.refresh_token,
       };
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
-        "Unable to login"
-      );
+      if (axios.isAxiosError(error)) {
+        return thunkAPI.rejectWithValue(
+          error.response?.data?.message ||
+          error.response?.data?.error ||
+          error.message ||
+          "Unable to login"
+        );
+      }
+
+      return thunkAPI.rejectWithValue("Unable to login");
     }
   }
 );
 
-const initialState = {
+const initialState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
@@ -35,7 +73,6 @@ const initialState = {
 
 const authSlice = createSlice({
   name: "auth",
-
   initialState,
 
   reducers: {
@@ -56,10 +93,6 @@ const authSlice = createSlice({
     clearAuthError(state) {
       state.error = null;
     },
-
-    // setInvalidAccessToken(state) {
-    //   state.accessToken = "invalid-access-token";
-    // },
   },
 
   extraReducers: (builder) => {
@@ -88,8 +121,7 @@ const authSlice = createSlice({
         state.user = null;
         state.accessToken = null;
         state.refreshToken = null;
-        state.error =
-          action.payload || "Unable to login";
+        state.error = action.payload || "Unable to login";
       });
   },
 });
@@ -98,7 +130,6 @@ export const {
   logout,
   updateTokens,
   clearAuthError,
-  // setInvalidAccessToken,
 } = authSlice.actions;
 
 export default authSlice.reducer;

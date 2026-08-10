@@ -1,6 +1,12 @@
 import { memo } from "react";
 
-function Suggestion({ image, username, mutualFriends }) {
+interface SuggestionProps {
+  image: string;
+  username: string;
+  mutualFriends?: number;
+}
+
+function Suggestion({ image, username, mutualFriends }: SuggestionProps) {
   return (
     <div className="suggestion">
       <div className="suggestion-user">
